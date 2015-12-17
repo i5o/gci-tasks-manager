@@ -42,7 +42,7 @@ class GCIManager(Gtk.Window):
 
         self.set_gravity(Gdk.Gravity.CENTER)
         self.set_position(Gtk.WindowPosition.CENTER)
-        self.set_size_request(Gdk.Screen.get_default().get_width(), 768)
+        self.maximize()
         self.add(self.vbox)
         self.show_all()
 
@@ -51,7 +51,7 @@ class GCIManager(Gtk.Window):
 
     def add_page(self, page_num):
         scroll = Gtk.ScrolledWindow()
-        scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+        scroll.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
 
         self.notebook.append_page(scroll, Gtk.Label("Page %d" % page_num))
 
@@ -110,6 +110,7 @@ class GCITasksList(Gtk.TreeView):
                 renderer.set_property("adjustment", adjustment)
 
             renderer.connect(event_name, self.data_edited, pos)
+            column.set_resizable(True)
             self.append_column(column)
 
         self.model = Gtk.ListStore(
